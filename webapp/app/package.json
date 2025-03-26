@@ -1,0 +1,17 @@
+{
+  "name": "simple-web-app",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^3.1.0",
+    "pg" : "*"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
+}

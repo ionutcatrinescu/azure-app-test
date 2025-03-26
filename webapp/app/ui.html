@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic User Management Interface</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link the external CSS -->
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>User Management</h1>
+      <p>Easily manage users in your application.</p>
+    </header>
+
+    <section class="form-section">
+      <h2>Add a New User</h2>
+      <form id="user-form">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" placeholder="Enter user name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" placeholder="Enter user email" required />
+        </div>
+        <button type="submit" class="btn-primary">Add User</button>
+      </form>
+    </section>
+
+    <hr />
+
+    <section class="users-section">
+      <h2>All Users</h2>
+      <button id="fetch-users" class="btn-secondary">Show Users</button>
+      <ul id="users-list" class="users-list"></ul>
+    </section>
+  </div>
+
+  <script>
+    // Add a new user via form submission
+    document.getElementById("user-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+
+      const response = await fetch("/add-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email }),
+      });
+
+      const result = await response.text();
+      alert(result);
+      document.getElementById("user-form").reset();
+    });
+
+    // Fetch all users and display the list
+    document.getElementById("fetch-users").addEventListener("click", async () => {
+      const response = await fetch("/users");
+      const users = await response.json();
+
+      const usersList = document.getElementById("users-list");
+      usersList.innerHTML = ""; // Clear existing list
+      users.forEach((user) => {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `<strong>${user.name}</strong> (${user.email})`;
+        usersList.appendChild(listItem);
+      });
+    });
+  </script>
+</body>
+</html>
