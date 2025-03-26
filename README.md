@@ -9,6 +9,8 @@
 If any issues appear and require a rerun, clean up the containers and volumes, then rebuild everything to ensure a clean start: 
 
 **docker-compose down -v**
+
+
 **docker-compose up --build**
 
 The -v flag ensures volumes are removed, which forces PostgreSQL to reinitialize and apply the init.sql script.
